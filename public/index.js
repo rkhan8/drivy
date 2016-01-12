@@ -166,7 +166,7 @@ var rentalModifications = [{
   'pickupDate': '2015-12-05'
 }];
 
-//Exercice 1:
+
 
 for(var i = 0; i < rentals.length;i++)
 {
@@ -176,21 +176,59 @@ for(var i = 0; i < rentals.length;i++)
 	{
 		if(rentals[i].carId == cars[j].id)
 		{
+
 			distance = cars[j].pricePerKm * rentals[i].distance;
+			
+			
 			/*
+			
+			//Exercice 1:
+
+			time = cars[j].pricePerDay*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
+			rentals[i].price = distance+time;
+			*/
+			
+			
+			//exercice 2
+			
 			var dayPick = new Date(rentals[i].pickupDate);
 			var dayP = dayPick.getDate();
 			
 			var dayRe = new Date(rentals[i].returnDate);
 			var dayR = dayRe.getDate();
-			*/
 			
-			time = cars[j].pricePerDay*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
-			//time = cars[j].pricePerDay*(dayR - dayP) +1 ;
-			rentals[i].price = distance+time;
+			var day = dayR - dayP +1;
+			
+			if(day > 1)
+			{
+				time = (cars[j].pricePerDay - cars[i].pricePerDay*0.1)*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
+				rentals[i].price = distance+time;
+				
+					if(day > 4)
+				{
+					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.3)*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
+					rentals[i].price = distance+time;
+				}
+				
+					if(day > 10)
+				{
+					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.5)*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
+					rentals[i].price = distance+time;
+				}
+			}
+			else
+			{
+				time = cars[j].pricePerDay*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
+				rentals[i].price = distance+time;
+			}			
+			
 		}
 	}
 }
+
+
+//Exercice 2
+
 
 
 console.log(cars);
