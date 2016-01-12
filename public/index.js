@@ -189,6 +189,7 @@ for(var i = 0; i < rentals.length;i++)
 			*/
 			
 			
+			/*
 			//exercice 2
 			
 			var dayPick = new Date(rentals[i].pickupDate);
@@ -221,13 +222,11 @@ for(var i = 0; i < rentals.length;i++)
 				time = cars[j].pricePerDay*((new Date(rentals[i].returnDate)-new Date(rentals[i].pickupDate))/86400000+1);
 				rentals[i].price = distance+time;
 			}			
+			*/
 			
 		}
 	}
 }
-
-
-//Exercice 2
 
 
 
