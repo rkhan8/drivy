@@ -178,11 +178,6 @@ function date(dateP, dateR)
 	return (r-p) + 1;
 }
 
-function deductible()
-{
-	
-}
-
 
 for(var i = 0; i < rentals.length;i++)
 {
