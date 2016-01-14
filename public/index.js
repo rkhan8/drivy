@@ -196,14 +196,14 @@ for(var i = 0; i < rentals.length;i++) //browse rentals elements
 			
 			distance = cars[j].pricePerKm * rentals[i].distance;  //distance price calcul
 			
-			/*
+			
 			//Exercice 6
 			for(var m=0; m<rentalModifications.length; m++)
 			{
 				if(rentalModifications[m].rentalId == rentals[i].id)
 				{
 					
-					if(rentalModifications[m].rentalId != null) //check if returnDate exist
+					if(rentalModifications[m].returnDate != null) //check if return date exist
 					{
 						rentals[i].returnDate = rentalModifications[m].returnDate; //set new returnDate
 					}
@@ -220,7 +220,7 @@ for(var i = 0; i < rentals.length;i++) //browse rentals elements
 						
 				}				
 			}
-			*/
+			
 			
 			
 			/*
