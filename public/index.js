@@ -316,10 +316,6 @@ for(var i = 0; i < rentals.length;i++) //browse rentals elements
 	}
 }
 
-
-
-
-
 console.log(cars);
 console.log(rentals);
 console.log(actors);
