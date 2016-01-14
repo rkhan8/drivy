@@ -179,7 +179,7 @@ function date(dateP, dateR)
 }
 
 
-for(var i = 0; i < rentals.length;i++)
+for(var i = 0; i < rentals.length;i++) //browse rentals elements
 {
 	var time = 0;
 	var distance = 0;
@@ -187,7 +187,7 @@ for(var i = 0; i < rentals.length;i++)
 	var totalAmount = 0;
 	var deductionReduction = 0;
 	
-	for(var j = 0; j<cars.length;j++)
+	for(var j = 0; j<cars.length;j++) //browse car elements
 	{
 		if(rentals[i].carId == cars[j].id)
 		{
@@ -195,6 +195,33 @@ for(var i = 0; i < rentals.length;i++)
 			calculDate = date(rentals[i].pickupDate, rentals[i].returnDate);  //we calcul the day passed
 			
 			distance = cars[j].pricePerKm * rentals[i].distance;  //distance price calcul
+			
+			/*
+			//Exercice 6
+			for(var m=0; m<rentalModifications.length; m++)
+			{
+				if(rentalModifications[m].rentalId == rentals[i].id)
+				{
+					
+					if(rentalModifications[m].rentalId != null) //check if returnDate exist
+					{
+						rentals[i].returnDate = rentalModifications[m].returnDate; //set new returnDate
+					}
+						
+					if(rentalModifications[m].pickupDate != null) //check if pickupDate exist
+					{
+						rentals[i].pickupDate = rentalModifications[m].pickupDate; //set new pickupDate
+					}
+						
+					if(rentalModifications[m].distance != null) //check if distance exist
+					{
+						rentals[i].distance = rentalModifications[m].distance; //set new distance
+					}
+						
+				}				
+			}
+			*/
+			
 			
 			/*
 			//Exercice 1:
@@ -209,81 +236,72 @@ for(var i = 0; i < rentals.length;i++)
 			
 			if(calculDate > 1) 
 			{
-				time = (cars[j].pricePerDay - cars[i].pricePerDay*0.1)*calculDate; //calcul time cost by 10% discount of pricePerDay after 1 day
+				time = (cars[j].pricePerDay - cars[i].pricePerDay*0.1)*(date(rentals[i].pickupDate, rentals[i].returnDate)); //calcul time cost by 10% discount of pricePerDay after 1 day
 
 				if(calculDate > 4)
 				{
-					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.3)*calculDate; //calcul time cost by 30% discount of pricePerDay after 4 days
+					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.3)*(date(rentals[i].pickupDate, rentals[i].returnDate)); //calcul time cost by 30% discount of pricePerDay after 4 days
 				}
 				
 				if(calculDate > 10)
 				{
-					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.5)*calculDate; //calcul time cost by 50% discount of pricePerDay after 10 days
+					time = (cars[j].pricePerDay - cars[i].pricePerDay*0.5)*(date(rentals[i].pickupDate, rentals[i].returnDate)); //calcul time cost by 50% discount of pricePerDay after 10 days
 				}
 			}
 			else
 			{
-				time = cars[j].pricePerDay*calculDate;
+				time = cars[j].pricePerDay*(date(rentals[i].pickupDate, rentals[i].returnDate));
 			}
-			
 			rentals[i].price = distance+time;
 			
+
 			
-			
-			
-			//Avoir
 			//Exercice 3
-			
-			rentals[i].commission.assistance = calculDate;  //assiatnce 1€ per day
-			totalAmount = rentals[i].price - rentals[i].commission.assistance;  //price rent - assistance rate
-			rentals[i].commission.drivy = totalAmount*0.3;
-			rentals[i].commission.insurance =   (rentals[i].commission.drivy / 2); 
-			
+			rentals[i].commission.assistance = calculDate;  //assistance 1€ per day
+			totalAmount = rentals[i].price - rentals[i].commission.assistance;  //amount of the commission
+			rentals[i].commission.drivy = totalAmount*0.3; //30% commission of dryvi
+			rentals[i].commission.insurance =  (rentals[i].commission.drivy / 2); //Half of commission for insurance
 			
 			
 			
 			//Exercice 4
 			if(rentals[i].options.deductibleReduction === true)
-			{
-				
+			{		
 				deductionReduction = calculDate*4;  //each day we 4€ extra with deduction option
-				time = cars[j].pricePerDay*deductionReduction; //new price for time rate
-				rentals[i].price = distance+time;
+				rentals[i].price = rentals[i].price + deductionReduction;
 				totalAmount = rentals[i].price - rentals[i].commission.assistance; 
 				rentals[i].commission.drivy = totalAmount*0.3 + calculDate; //deductible reduction charge goes to drivy
-				//rentals[i].commission.insurance =  ((rentals[i].commission.drivy - calculDate) / 2);  //deductible reduction not charge for insurance //Not mandatory
 			}
 			
 			
 			
-			
 			//Exercice 5
-			for (var k = 0; k < actors.length; k++)
+			for (var k = 0; k < actors.length; k++) //browse actors elements
 			{
 				if(actors[k].rentalId == rentals[i].id)
 				{
-					for(var l =0; l < actors[k].payment.length; l++)
+					for(var l =0; l < actors[k].payment.length; l++) //browse actors.payment elements
 					{
 						switch(actors[k].payment[l].who)
 						{
 							case "driver":
-								actors[k].payment[l].amount = rentals[i].price - rentals[i].commission.drivy; //deductionReduction is calculed automatically if actors has suscribes to deduction option 
+								actors[k].payment[l].amount = rentals[i].price; //driver must pay rental price and deductible reduction (included in rental price if he has subscribed)
 							break;
 							
 							case "owner":
-								actors[k].payment[l].amount = rentals[i].price - rentals[i].commission.drivy;n //Ambiguïté avec le premier
+								actors[k].payment[l].amount = rentals[i].price - rentals[i].commission.drivy; //owner receives rental price minus commission
 							break;
 							
 							case "insurance":
-								actors[k].payment[l].amount = rentals[i].commission.insurance;
+								actors[k].payment[l].amount = rentals[i].commission.insurance; //insurance receives its parts of his commission
 							break;
 							
 							case "assistance":
-								actors[k].payment[l].amount = rentals[i].commission.assistance;
+								actors[k].payment[l].amount = rentals[i].commission.assistance; //assistance receives its parts of his commission
 							break;
 							
 							case "drivy":
-								actors[k].payment[l].amount = rentals[i].commission.drivy + deductionReduction ;
+								actors[k].payment[l].amount = rentals[i].commission.drivy + deductionReduction ; //drivy receives its parts of his commission plus deductible reduction
 							break;
 
 						}
@@ -293,11 +311,7 @@ for(var i = 0; i < rentals.length;i++)
 			}
 			
 			
-			//Exercice 6
-			
-			
-			
-			
+
 		}
 	}
 }
