@@ -196,7 +196,7 @@ for(var i = 0; i < rentals.length;i++) //browse rentals elements
 			
 			distance = cars[j].pricePerKm * rentals[i].distance;  //distance price calcul
 			
-			
+			/*//uncomment to test
 			//Exercice 6
 			for(var m=0; m<rentalModifications.length; m++)
 			{
@@ -220,10 +220,10 @@ for(var i = 0; i < rentals.length;i++) //browse rentals elements
 						
 				}				
 			}
+			*/
 			
 			
-			
-			/*
+			/*//uncomment to test
 			//Exercice 1:
 
 			time = cars[j].pricePerDay*calculDate; //time 
