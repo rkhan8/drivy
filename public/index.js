@@ -166,7 +166,7 @@ var rentalModifications = [{
   'pickupDate': '2015-12-05'
 }];
 
-//function to calcul day passed 
+//function to calcul days passed
 function date(dateP, dateR)
 {
 	
